@@ -8,7 +8,7 @@
       <link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Shrikhand&display=swap" rel="stylesheet">
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
             integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-      <link rel="stylesheet" href="../css/wiki.css">
+      <link rel="stylesheet" href="css/wiki.css">
 </head>
 
 <body class="back">
@@ -45,21 +45,21 @@
                   </ol>
                   <div class="carousel-inner">
                         <div class="carousel-item active">
-                              <img src="../img/slider1.jpg" class="d-block w-100 " alt="bild">
+                              <img src="img/slider1.jpg" class="d-block w-100 " alt="bild">
                               <div class="carousel-caption d-none d-md-block ">
                                     <h5 class="sliderText1">Dream Cars Wiki</h5>
                                     <p class="sliderText2">Die schönsten Autos der Welt </p>
                               </div>
                         </div>
                         <div class="carousel-item">
-                              <img src="../img/slider2.jpg" class="d-block w-100" alt="bild">
+                              <img src="img/slider2.jpg" class="d-block w-100" alt="bild">
                               <div class="carousel-caption d-none d-md-block">
                                     <h5 class="sliderText1">Dream Cars Wiki</h5>
                                     <p class="sliderText2">.</p>
                               </div>
                         </div>
                         <div class="carousel-item">
-                              <img src="../img/slider3.jpg" class="d-block w-100" alt="bild">
+                              <img src="img/slider3.jpg" class="d-block w-100" alt="bild">
                               <div class="carousel-caption d-none d-md-block">
                                     <h5 class="sliderText1">Dream Cars Wiki</h5>
                                     <p class="sliderText2"></p>
@@ -76,8 +76,8 @@
                   </a>
             </div>
       </section>
-
-      <section class="cardSectionStyle">
+      <h1 class="h1StyleAutoLekikon">Das Große Autolexikon</h1>
+     <!-- <section class="cardSectionStyle">
             <h1 class="h1StyleAutoLekikon">Das Große Autolexikon</h1>
             <div class="container">
                   <div class="card-columns">
@@ -128,7 +128,7 @@
                               </div>
 
                         </div>
-                        <div class="card">
+                        <div class="card ">
                               <img src="../img/card2.jpg" class="card-img-top" alt="...">
                               <div class="card-body">
                                     <h5 class="card-title">Chevy</h5>
@@ -139,68 +139,86 @@
                         </div>
                   </div>
             </div>
-      </section>
+      </section>-->
 
 
 
-      <?php
-
-
-include('inc/login.inc.php');
-$result = $con->query("SELECT id, title, teaser, imgpath from content");
-
-while($entry = $result->fetch_assoc())
-{    
-      echo
       
-      $dsatz[""] . ", "
-      . $dsatz[""] . ", "
-      . $dsatz[""] . " ";
+      <section class="container">
+            <div class="card-colums">
+            <?php
+            include('inc/login.inc.php');
+            $result = $con->query("SELECT id, title, teaser, imgpath from content");
+
+            while($entry = $result->fetch_assoc()){
+             ?>
+                  <!--Card Anfang-->  
+                  <div class="card" id="id<?php echo $entry['id'] ?>">
+                        <?php if($entry['imgpath']){?>
+                        <img src="upload-img/<?php echo $entry['imgapath']?>" class="card-img blur" alt="bild">
+                        <?php } ?>
+                        <div class="card-body">
+                              <!--Button trigger modal-->
+                              <button type ="button" class="card-title btn ajaxModal" data-toggle="modal"
+                                  data-id="<?php echo $entry['id'];?>">
+                                  <?php echo $entry ['title'];?>
+                              </button>
+                              <p class="card-text teaser">
+                                    <?php
+                                    echo $entry['teaser'];
+                                    ?>
+                                    </p>
+                        </div>
+                  </div>
+                  <!--Card Ende-->
+                  <?php
+                  }
+                  var_dump($result);
+                  $con->close();
+                  ?>
+                  </section>
       
-}
-?>
-
-      <?php
       
-      if($entry['imgpath']) ?>
-      src="lexikon-img/<?php echo $entry['imgpath'] ?>"
-      <button type="button" class="card-title btn ajaxModal" data-toggle="modal" data-id="<?php echo $entry['id'] ?>">
-            <?php echo $entry['teaser']; ?>
-            <?php $con->close(); ?>
+            <!-- Modal-->
+            <div class="modal fade" id="showModal" tabindex="-1" role="dialog" aria-labelledby="lexikon-entry"
+                  aria-hidden="true">
+                  <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
 
-
-    <!-- Modal-->        
-<div class="modal fade" id="showModal" tabindex="-1" role="dialog" aria-labelledby="lexikon-entry"
-      aria-hidden="true">
-      <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-
-                  <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              </div>
+                        </div>
                   </div>
             </div>
-      </div>
-</div>
 
-    <!--Modal End-->
+            <!--Modal End-->
 
 
-      <script>
-            $(document).ready(funktion(){/*jQuery-Magic */}
+            <script>
+                  $(document).ready(funktion() {
+                              $('.ajaxModal').click(funktion() {
+                                                var lexikonID = $(this).data('id');
 
-            .click()
-            $('.ajaxModal').click(funktion (){}
+                                                $.ajax({
+                                                                  url: '/inc/loadModal.inc.php',
+                                                                  type: 'post',
+                                                                  data: {
+                                                                        lexikonID: lexinkonID
+                                                                  },
+                                                                  sucess: function (response) {
+                                                                        $('.modal-content').html(response);
+                                                                        $('#showModal').modal('show');
+                                                                  }
+                                                            });
 
-            var lexikonID = $(this).data('id');
+                                                      });
 
-            $.ajax({url: '/inc/loadModal.inc.php',type:'post',data:{lexikonID:lexinID},sucess:function(response){}
+                                                      });
 
-            $('.modal-content').html(response);
-            $('#showModal').modal('show');
+                                             </script>
 
-      </script>
 
-              
 
 
 
