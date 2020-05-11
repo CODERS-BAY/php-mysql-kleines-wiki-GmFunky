@@ -144,8 +144,9 @@
 
 
       
-      <section class="container">
-            <div class="card-colums">
+      <section class="container ">
+      
+            <div class="card">
             <?php
             include('inc/login.inc.php');
             $result = $con->query("SELECT id, title, teaser, imgpath from content");
@@ -153,9 +154,10 @@
             while($entry = $result->fetch_assoc()){
              ?>
                   <!--Card Anfang-->  
-                  <div class="card" id="id<?php echo $entry['id'] ?>">
+                  <div class=" card " id="id<?php echo $entry['id'] ?>">
                         <?php if($entry['imgpath']){?>
-                        <img src="upload-img/<?php echo $entry['imgapath']?>" class="card-img blur" alt="bild">
+                        <!--<img src="upload-img/jpg<?php echo $entry['imgpath']?>" class="card-img blur" alt="bild">-->
+                       <?php echo '<img src="data:image/jpeg;base64,'.base64_encode( $entry['imgpath'] ).'"/>';?>
                         <?php } ?>
                         <div class="card-body">
                               <!--Button trigger modal-->
