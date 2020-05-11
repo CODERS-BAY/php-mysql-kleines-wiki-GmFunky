@@ -140,46 +140,67 @@
                   </div>
             </div>
       </section>
-      
-      <!--ModaL
-      <div class="modal fade" id="showModal" tabindex="-1" role="dialog" aria-labelledby="lexikon-entry"
-            aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                  <div class="modal-content">
 
-                        <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        </div>
-                  </div>
-            </div>
-      </div>
-      Info Ende-->
 
-     
+
       <?php
 
-      /*
-      include('inc/login.inc.php');
-      $result = $con->query("SELECT id, title, teaser, imgpath from content");
 
-      while($entry = $result->fetch_assoc())
-           {    
+include('inc/login.inc.php');
+$result = $con->query("SELECT id, title, teaser, imgpath from content");
+
+while($entry = $result->fetch_assoc())
+{    
       echo
-        
-        $dsatz[""] . ", "
+      
+      $dsatz[""] . ", "
       . $dsatz[""] . ", "
       . $dsatz[""] . " ";
       
-      }*/
-      ?>
+}
+?>
 
       <?php
-      /*
+      
       if($entry['imgpath']) ?>
       src="lexikon-img/<?php echo $entry['imgpath'] ?>"
       <button type="button" class="card-title btn ajaxModal" data-toggle="modal" data-id="<?php echo $entry['id'] ?>">
             <?php echo $entry['teaser']; ?>
-            <?php $con->close();*/ ?>
+            <?php $con->close(); ?>
+
+
+    <!-- Modal-->        
+<div class="modal fade" id="showModal" tabindex="-1" role="dialog" aria-labelledby="lexikon-entry"
+      aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+
+                  <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+            </div>
+      </div>
+</div>
+
+    <!--Modal End-->
+
+
+      <script>
+            $(document).ready(funktion(){/*jQuery-Magic */}
+
+            .click()
+            $('.ajaxModal').click(funktion (){}
+
+            var lexikonID = $(this).data('id');
+
+            $.ajax({url: '/inc/loadModal.inc.php',type:'post',data:{lexikonID:lexinID},sucess:function(response){}
+
+            $('.modal-content').html(response);
+            $('#showModal').modal('show');
+
+      </script>
+
+              
 
 
 
